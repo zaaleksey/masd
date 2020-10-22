@@ -1,7 +1,7 @@
 # Парные коэффициенты корреляции
 
 import numpy as np
-from math import sqrt, log
+from math import sqrt, log, tanh, atanh
 
 n = 14
 x = [2.8, 2.2, 3.0, 3.5, 3.2, 3.7, 4.0, 4.8, 6.0, 5.4, 5.2, 5.4, 6.0, 9.0]
@@ -30,8 +30,8 @@ print('\nz =', z)
 
 # alpha = 0,05 (0,05/2)
 u = 1.9599
-z1 = z - (u / sqrt(n - 3)) - (r_ / (2 * (n - 1)))
-z2 = z + (u / sqrt(n - 3)) - (r_ / (2 * (n - 1)))
+z1 = atanh(r_) - (u / sqrt(n - 3)) - (r_ / (2 * (n - 1)))
+z2 = atanh(r_) + (u / sqrt(n - 3)) - (r_ / (2 * (n - 1)))
 
 print('Доверительный интервал:')
-print(z1, '< r <', z2)
+print(tanh(z1), '< r <', tanh(z2))
