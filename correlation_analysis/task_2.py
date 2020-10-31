@@ -1,5 +1,4 @@
 # Частные и множественные коэффициенты корреляции
-
 from math import sqrt, log, tanh, atanh, fabs
 
 p = 2
