@@ -15,6 +15,7 @@ data = np.array([
 mu = data.mean()
 print('Оценка генерального среднего mu =', mu)
 
+<<<<<<< Updated upstream
 y_i = [data[i].mean() for i in range(I)]
 print('Средние по строкам:', y_i)
 a_i = [y_i[i] - mu for i in range(I)]
@@ -23,6 +24,12 @@ print('a_i:', a_i)
 y_j = [data.transpose()[j].mean() for j in range(J)]
 print('Средние по столбцам:', y_j)
 b_j = [y_j[j] - mu for j in range(J)]
+=======
+a_i = [data[i].mean() - mu for i in range(I)]
+print('a_i:', a_i)
+
+b_j = [data.transpose()[j].mean() - mu for j in range(J)]
+>>>>>>> Stashed changes
 print('b_j:', b_j, '\n')
 
 SS_A = J * sum([a_i[i] ** 2 for i in range(I)])
@@ -35,16 +42,24 @@ v_B = J - 1
 MS_B = SS_B / v_B
 print('SS_B =', SS_B, '\tv_B =', v_B, '\tMS_B =', MS_B)
 
+<<<<<<< Updated upstream
 SS_R = sum([(data[i][j] - y_i[i] - y_j[j] + mu) ** 2 for i in range(I) for j in range(J)])
+=======
+SS_R = sum([(data[i][j] - a_i[i] - b_j[j] + mu) ** 2 for i in range(I) for j in range(J)])
+>>>>>>> Stashed changes
 v_R = v_A * v_B
 MS_R = SS_R / v_R
 print('SS_R =', SS_R, '\tv_R =', v_R, '\tMS_R =', MS_R)
 
+<<<<<<< Updated upstream
 # SS_T = SS_A + SS_B + SS_R
+=======
+>>>>>>> Stashed changes
 SS_T = sum([(data[i][j] - mu) ** 2 for i in range(I) for j in range(J)])
 v_T = I * J - 1
 print('SS_T =', SS_T, '\tv_T =', v_T)
 
+<<<<<<< Updated upstream
 F_A = MS_A / MS_R
 F_B = MS_B / MS_R
 v1_A = I - 1
@@ -67,3 +82,9 @@ if F_B > 2.18:
     print('Гипотеза H_0: b_j = 0 отвергается')
 else:
     print('Гипотеза H_0: b_j = 0 принимается')
+=======
+print('Гипотеза a_i = 0')
+F = MS_A / MS_R
+v1 = I - 1
+v2 = v_R
+>>>>>>> Stashed changes
