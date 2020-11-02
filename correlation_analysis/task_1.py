@@ -1,5 +1,4 @@
 # Парные коэффициенты корреляции
-
 import numpy as np
 from math import sqrt, log, tanh, atanh
 
