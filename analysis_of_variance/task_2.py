@@ -15,10 +15,14 @@ data = np.array([
 mu = data.mean()
 print('Оценка генерального среднего mu =', mu)
 
-a_i = [data[i].mean() - mu for i in range(I)]
+y_i = [data[i].mean() for i in range(I)]
+print('Средние по строкам:', y_i)
+a_i = [y_i[i] - mu for i in range(I)]
 print('a_i:', a_i)
 
-b_j = [data.transpose()[j].mean() - mu for j in range(J)]
+y_j = [data.transpose()[j].mean() for j in range(J)]
+print('Средние по столбцам:', y_j)
+b_j = [y_j[j] - mu for j in range(J)]
 print('b_j:', b_j, '\n')
 
 SS_A = J * sum([a_i[i] ** 2 for i in range(I)])
@@ -31,16 +35,35 @@ v_B = J - 1
 MS_B = SS_B / v_B
 print('SS_B =', SS_B, '\tv_B =', v_B, '\tMS_B =', MS_B)
 
-SS_R = sum([(data[i][j] - a_i[i] - b_j[j] + mu) ** 2 for i in range(I) for j in range(J)])
+SS_R = sum([(data[i][j] - y_i[i] - y_j[j] + mu) ** 2 for i in range(I) for j in range(J)])
 v_R = v_A * v_B
 MS_R = SS_R / v_R
 print('SS_R =', SS_R, '\tv_R =', v_R, '\tMS_R =', MS_R)
 
+# SS_T = SS_A + SS_B + SS_R
 SS_T = sum([(data[i][j] - mu) ** 2 for i in range(I) for j in range(J)])
 v_T = I * J - 1
 print('SS_T =', SS_T, '\tv_T =', v_T)
 
-print('Гипотеза a_i = 0')
-F = MS_A / MS_R
-v1 = I - 1
+F_A = MS_A / MS_R
+F_B = MS_B / MS_R
+v1_A = I - 1
+v1_B = J - 1
 v2 = v_R
+
+print()
+print('H_0: a_i = 0\t|\tH_0: b_j = 0')
+print('F =', round(F_A, 6), '\t|\tF =', round(F_B, 6))
+print('v1 =', v1_A, '\t\t\t|\tv1 =', v1_B)
+print('v2 =', v2, '\t\t|\tv2 =', v2)
+# v^2_0.05(5, 40) = 2.45
+# v^2_0.05(8, 40) = 2.18
+if F_A > 2.45:
+    print('Гипотеза H_0: a_i = 0 отвергается')
+else:
+    print('Гипотеза H_0: a_i = 0 принимается')
+
+if F_B > 2.18:
+    print('Гипотеза H_0: b_j = 0 отвергается')
+else:
+    print('Гипотеза H_0: b_j = 0 принимается')
